@@ -33,8 +33,6 @@ export class Slider {
         this.imageObjects = []
 
         this.#init()
-
-        setInterval(() => this.nextSlide(), 1000)
     }
 
     #init() {
@@ -92,6 +90,20 @@ export class Slider {
             this.nextSlide()
         } else {
             this.parentElement.scrollLeft += this.imageObjects[0].offsetWidth
+        }
+    }
+
+    prevSlide() {
+        if (this.parentElement.scrollLeft == 0) {
+            this.parentElement.style.scrollBehavior = "auto"
+            this.parentElement.scrollLeft =
+                this.parentElement.scrollWidth -
+                this.imageObjects[this.imageObjects.length - 1].offsetWidth
+            this.parentElement.style.scrollBehavior = "smooth"
+
+            this.prevSlide()
+        } else {
+            this.parentElement.scrollLeft -= this.imageObjects[0].offsetWidth
         }
     }
 }
